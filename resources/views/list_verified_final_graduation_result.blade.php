@@ -26,10 +26,23 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers verified the final graduation results (@700/- per student)):</h2>
+                    <h2 class="card-title">List of Teachers verified the final graduation results (@***/- per student)):</h2>
                 </header>
 
                 <div class="card-body card-list-of-verified-graduation-result">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="final_result_per_student_rate">Per Student Per Result Rate</label>
+                                <input type="number"  name="final_result_per_student_rate" step="any" class="form-control" placeholder="Enter per student per result rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>

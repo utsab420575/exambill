@@ -25,10 +25,23 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary ">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers Verified Computerized Grade Sheets & GPA List (@24/- per student)</h2>
+                    <h2 class="card-title">List of Teachers Verified Computerized Grade Sheets & GPA List (@**/- per student)</h2>
                 </header>
 
                 <div class="card-body card-list-of-verified-computerized-result" >
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="verified_computerized_grade_sheet_rate">Per Student Rate</label>
+                                <input type="number"  name="verified_computerized_grade_sheet_rate" step="any" class="form-control" placeholder="Enter per student rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
                     <div class="form-group row pb-3">
                         {{-- Select Teacher --}}
                         <label class="col-md-2 control-label text-lg-end pt-2">Select Teacher(s)</label>

@@ -37,7 +37,7 @@ class StaffController extends Controller
         return response()->json($result);
     }
 
-    public function all_form(Request $request, $sid)
+    public function sessionsRegularForm(Request $request, $sid)
     {
         //return 'utsab';
         //return $sid;
@@ -73,7 +73,7 @@ class StaffController extends Controller
 
          //return response()->json(['session_info'=>$session_info]);
         /*return response()->json(['head'=>$all_course_with_class_test_teacher]);*/
-        return view('all_form_data')
+        return view('all_regular_session_form')
             ->with('sid',$sid)
             ->with('teacher_head', $teacher_head)
             ->with('teacher_coordinator', $teacher_coordinator)
@@ -93,6 +93,8 @@ class StaffController extends Controller
         $teacherIds = $request->input('moderation_committee_teacher_ids'); // array
         $amounts = $request->input('moderation_committee_amounts');        // array (indexed)
         $sessionId = $request->sid; // You can make this dynamic
+        $min_rate=$request->moderation_committee_min_rate;
+        $max_rate=$request->moderation_committee_max_rate;
 
         Log::info('teacherId',$teacherIds);
         Log::info('teacherId',$amounts);
@@ -105,6 +107,7 @@ class StaffController extends Controller
             ], 422);
         }
 
+
         Log::info('pass out1');
         // Step 2: Check for duplicates
         if (count($teacherIds) !== count(array_unique($teacherIds))) {
@@ -112,6 +115,23 @@ class StaffController extends Controller
                 'message' => 'Duplicate teacher selection detected. Please choose unique teachers.'
             ], 422);
         }
+
+
+        // ✅ Step 3: Check if each amount is within min and max rate
+        foreach ($amounts as $index => $amount) {
+            if (!is_numeric($amount)) {
+                return response()->json([
+                    'message' => "Invalid amount format for teacher at index {$index}."
+                ], 422);
+            }
+
+            if ($amount < $min_rate || $amount > $max_rate) {
+                return response()->json([
+                    'message' => "Amount for teacher at position " . ($index + 1) . " must be between {$min_rate} and {$max_rate}."
+                ], 422);
+            }
+        }
+
 
         Log::info('pass out2');
         DB::beginTransaction();
@@ -153,8 +173,8 @@ class StaffController extends Controller
             if (!$rateAmount) {
                 $rateAmount = new RateAmount();
                 $rateAmount->default_rate = 0;
-                $rateAmount->min_rate = 1500;
-                $rateAmount->max_rate = 5000;
+                $rateAmount->min_rate = $min_rate;
+                $rateAmount->max_rate = $max_rate;
                 $rateAmount->session_id = $session_info->id;
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->save();
@@ -206,6 +226,9 @@ class StaffController extends Controller
         $paperSetterData = $request->input('paper_setter_ids', []);
         $examinerData = $request->input('examiner_ids', []);
         $noOfScripts = $request->input('no_of_script', []);
+        $script_rate=$request->examiner_rate_per_script;
+        $examiner_min_rate=$request->examiner_min_rate;
+        $paper_setter_rate=$request->paper_setter_rate;
         $sessionId = $request->sid;
 
         try {
@@ -259,9 +282,7 @@ class StaffController extends Controller
                 $rateAmount_2 = new RateAmount();
                 $rateAmount_2->rate_head_id = $rateHead_2->id;
                 $rateAmount_2->session_id = $session_info->id;
-                $rateAmount_2->default_rate = 0;
-                $rateAmount_2->min_rate = 0;
-                $rateAmount_2->max_rate = 0;
+                $rateAmount_2->default_rate = $paper_setter_rate;
                 $rateAmount_2->save();
                 Log::info('✅ New RateAmount created', $rateAmount_2->toArray());
             }
@@ -275,8 +296,8 @@ class StaffController extends Controller
                 $rateAmount_3 = new RateAmount();
                 $rateAmount_3->rate_head_id = $rateHead_3->id;
                 $rateAmount_3->session_id = $session_info->id;
-                $rateAmount_3->default_rate = 200;
-                $rateAmount_3->min_rate = 1000;
+                $rateAmount_3->default_rate = $script_rate;
+                $rateAmount_3->min_rate = $examiner_min_rate;
                 $rateAmount_3->save();
                 Log::info('✅ New RateAmount created', $rateAmount_3->toArray());
             }
@@ -299,7 +320,7 @@ class StaffController extends Controller
                     $rateAssign->rate_head_id = $rateHead_2->id;
                     $rateAssign->session_id = $session_info->id;
                     $rateAssign->no_of_items = 0;
-                    $rateAssign->total_amount = 3600;
+                    $rateAssign->total_amount = $paper_setter_rate;
                     $rateAssign->save();
                 }
             }
@@ -358,6 +379,7 @@ class StaffController extends Controller
         $classTestTeacherData = $request->input('class_test_teachers_ids', []);
         $noOfStudents = $request->input('no_of_students_ct', []);
         $sessionId = $request->sid;
+        $class_test_rate = $request->class_test_rate;
         try {
             DB::beginTransaction();
 
@@ -392,9 +414,7 @@ class StaffController extends Controller
                 $rateAmount = new RateAmount();
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->session_id = $session_info->id;
-                $rateAmount->default_rate = 45;
-                $rateAmount->min_rate = 0;
-                $rateAmount->max_rate = 0;
+                $rateAmount->default_rate = $class_test_rate;
                 $rateAmount->save();
                 Log::info('✅ New RateAmount created', $rateAmount->toArray());
             }
@@ -416,7 +436,9 @@ class StaffController extends Controller
                 $teacherCount = count($teacherIds);
 
                 if ($teacherCount > 0) {
-                    $studentCount = $studentCount / $teacherCount;
+                   // $studentCount = $studentCount / $teacherCount;
+                    //2 class test taken that's why multiply by 2
+                    $studentCount = $studentCount *2;
                 } else {
                     $studentCount = 0;
                 }
@@ -465,6 +487,8 @@ class StaffController extends Controller
         $noOfContactHour = $request->input('no_of_contact_hour', []);
         $total_week=$request->input('total_week');
         $sessionId = $request->sid;
+        $sessional_per_hour_rate = $request->sessional_per_hour_rate;
+        $sessional_examiner_min_rate = $request->sessional_examiner_min_rate;
 
 
         try {
@@ -501,8 +525,8 @@ class StaffController extends Controller
                 $rateAmount = new RateAmount();
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->session_id = $session_info->id;
-                $rateAmount->default_rate = 115; // Set your desired rate per hour
-                $rateAmount->min_rate = 1500;
+                $rateAmount->default_rate = $sessional_per_hour_rate; // Set your desired rate per hour
+                $rateAmount->min_rate = $sessional_examiner_min_rate;
                 $rateAmount->save();
 
                 Log::info('✅ New RateAmount created', $rateAmount->toArray());
@@ -565,6 +589,8 @@ class StaffController extends Controller
         $scrutinizer_teacher_ids = $request->input('scrutinizer_teacher_ids', []);
         $scrutinizers_no_of_students = $request->input('scrutinizers_no_of_students', []);
         $sessionId=$request->input('sid');
+        $scrutinize_script_rate=$request->input('scrutinize_script_rate');
+        $scrutinize_min_rate=$request->input('scrutinize_min_rate');
 
         Log::info('Scrutinizer Form Submission Data:', [
             'scrutinizer_teacher_ids' => $scrutinizer_teacher_ids,
@@ -604,7 +630,7 @@ class StaffController extends Controller
             DB::beginTransaction();
 
             // 1️⃣ Manually fetch or create RateHead (object-based)
-            $rateHead = RateHead::where('order_no', 5)->first(); // Use appropriate order_no for Scrutinizer
+            $rateHead = RateHead::where('order_no', 9)->first(); // Use appropriate order_no for Scrutinizer
             if (!$rateHead) {
                 $rateHead = new RateHead();
                 $rateHead->head = 'Scrutinizer';
@@ -633,8 +659,8 @@ class StaffController extends Controller
                 $rateAmount = new RateAmount();
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->session_id = $session_info->id;
-                $rateAmount->default_rate = 24;  // ₹24 per script
-                $rateAmount->min_rate = 1000;    // ₹1000 minimum
+                $rateAmount->default_rate = $scrutinize_script_rate;  // ₹24 per script
+                $rateAmount->min_rate = $scrutinize_min_rate;    // ₹1000 minimum
                 $rateAmount->save();
                 Log::info('✅ RateAmount created (Scrutinizer):', $rateAmount->toArray());
             }
@@ -692,6 +718,7 @@ class StaffController extends Controller
         $teacherData = $request->input('prepare_theory_grade_sheet_teacher_ids', []);
         $studentData = $request->input('prepare_theory_grade_sheet_no_of_students', []);
         $sessionId=$request->sid;
+        $theory_grade_sheet_rate=$request->theory_grade_sheet_rate;
 
         Log::info('Received Theory Grade Sheet Submission', [
             'session_id' => $sessionId,
@@ -764,7 +791,7 @@ class StaffController extends Controller
                 $rateAmount = new RateAmount();
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->session_id = $session_info->id;
-                $rateAmount->default_rate = 45;  // ₹24 per script (example rate)
+                $rateAmount->default_rate = $theory_grade_sheet_rate;  // ₹24 per script (example rate)
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount created (Scrutinizer):', $rateAmount->toArray());
@@ -780,14 +807,14 @@ class StaffController extends Controller
 
                     foreach ($teacherIds as $teacherId) {
                         $calculatedAmount = $studentsPerTeacher * $rateAmount->default_rate;
-                        $total_amount = max($rateAmount->min_rate, $calculatedAmount); // Enforce min
+                        //$total_amount = max($rateAmount->min_rate, $calculatedAmount); // Enforce min
 
                         RateAssign::create([
                             'teacher_id'   => $teacherId,
                             'rate_head_id' => $rateHead->id,
                             'session_id'   => $session_info->id,
                             'no_of_items'  => $studentsPerTeacher,
-                            'total_amount' => $total_amount,
+                            'total_amount' => $calculatedAmount,
                         ]);
                     }
                 }
@@ -824,6 +851,7 @@ class StaffController extends Controller
         $teacherData = $request->input('prepare_sessional_grade_sheet_teacher_ids', []);
         $studentData = $request->input('prepare_sessional_grade_sheet_no_of_students', []);
         $sessionId   = $request->sid;
+        $sessional_grade_sheet_rate   = $request->sessional_grade_sheet_rate;
 
         Log::info('📥 Received Sessional Grade Sheet Submission', [
             'session_id' => $sessionId,
@@ -899,7 +927,7 @@ class StaffController extends Controller
                 $rateAmount = new RateAmount();
                 $rateAmount->rate_head_id = $rateHead->id;
                 $rateAmount->session_id = $session_info->id;
-                $rateAmount->default_rate = 35; // Example rate
+                $rateAmount->default_rate = $sessional_grade_sheet_rate; // Example rate
                 $rateAmount->save();
 
                 Log::info('✅ New RateAmount created (Sessional):', $rateAmount->toArray());
@@ -956,6 +984,7 @@ class StaffController extends Controller
         $teacherData = $request->input('scrutinizing_theory_grade_sheet_teacher_ids', []);
         $studentData = $request->input('scrutinizing_theory_grade_sheet_no_of_students', []);
         $sessionId = $request->sid;
+        $scrutinize_theory_grade_sheet_rate = $request->scrutinize_theory_grade_sheet_rate;
 
         Log::info('📥 Received Scrutinizing Theory Grade Sheet', [
             'session_id' => $sessionId,
@@ -1025,7 +1054,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 20;
+                $rateAmount->default_rate = $scrutinize_theory_grade_sheet_rate;
                 $rateAmount->save();
                 Log::info('✅ RateAmount created:', $rateAmount->toArray());
             }
@@ -1082,6 +1111,7 @@ class StaffController extends Controller
         $teacherData = $request->input('scrutinizing_sessional_grade_sheet_teacher_ids', []);
         $studentData = $request->input('scrutinizing_sessional_grade_sheet_no_of_students', []);
         $sessionId = $request->sid;
+        $scrutinize_sessional_grade_sheet_rate = $request->scrutinize_sessional_grade_sheet_rate;
 
         Log::info('📥 Received Scrutinizing Sessional Grade Sheet', [
             'session_id' => $sessionId,
@@ -1151,7 +1181,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 10; // Example rate
+                $rateAmount->default_rate = $scrutinize_sessional_grade_sheet_rate; // Example rate
                 $rateAmount->save();
                 Log::info('✅ RateAmount created:', $rateAmount->toArray());
             }
@@ -1208,6 +1238,7 @@ class StaffController extends Controller
         $teacherData = $request->input('prepared_computerized_result_teacher_ids', []);
         $studentData = $request->input('prepared_computerized_result_no_of_students', []);
         $sessionId = $request->sid;
+        $prepare_computerized_result_rate=$request->input('prepare_computerized_result_rate');
 
         Log::info('📥 Received Prepared Computerized Result Data', [
             'session_id' => $sessionId,
@@ -1273,7 +1304,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 10; // Default rate for computerized result
+                $rateAmount->default_rate = $prepare_computerized_result_rate; // Default rate for computerized result
                 $rateAmount->save();
                 Log::info('✅ RateAmount created:', $rateAmount->toArray());
             }
@@ -1330,6 +1361,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('verified_computerized_result_teachers', []);
         $totalStudents = (int) $request->input('verified_computerized_result_total_students');
         $sessionId = $request->sid;
+        $verified_computerized_grade_sheet_rate = $request->verified_computerized_grade_sheet_rate;
 
         Log::info('📥 Received Verified Computerized Result Data', [
             'session_id' => $sessionId,
@@ -1389,7 +1421,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 24; // Set your rate here
+                $rateAmount->default_rate = $verified_computerized_grade_sheet_rate; // Set your rate here
                 $rateAmount->save();
                 Log::info('✅ RateAmount created.', $rateAmount->toArray());
             }
@@ -1441,6 +1473,10 @@ class StaffController extends Controller
             DB::beginTransaction();
 
             $sessionId = $request->sid;
+            $per_stencil_cutting_rate = $request->per_stencil_rate;
+            $print_per_stencil_rate = $request->print_per_stencil_rate;
+            $per_question_rate = $request->per_question_rate;
+
             $session = LocalData::getOrCreateSession($sessionId);
 
             /**
@@ -1471,7 +1507,7 @@ class StaffController extends Controller
                     'session_id' => $session->id,
                 ]);
                 if (!$rateAmountCutting->exists) {
-                    $rateAmountCutting->default_rate = 115;
+                    $rateAmountCutting->default_rate = $per_stencil_cutting_rate;
                     $rateAmountCutting->save();
                     Log::info('RateAmount Created: Stencil Cutting', ['amount' => $rateAmountCutting]);
                 }
@@ -1520,7 +1556,7 @@ class StaffController extends Controller
                     'session_id' => $session->id,
                 ]);
                 if (!$rateAmountPrinting->exists) {
-                    $rateAmountPrinting->default_rate = 35;
+                    $rateAmountPrinting->default_rate = $print_per_stencil_rate;
                     $rateAmountPrinting->save();
                     Log::info('RateAmount Created: Stencil Cutting', ['amount' => $rateAmountPrinting]);
                 }
@@ -1568,7 +1604,7 @@ class StaffController extends Controller
                     'session_id' => $session->id,
                 ]);
                 if (!$rateAmountComparison->exists) {
-                    $rateAmountComparison->default_rate = 1350;
+                    $rateAmountComparison->default_rate = $per_question_rate;
                     $rateAmountComparison->save();
                     Log::info('RateAmount Created: Stencil Cutting', ['amount' => $rateAmountComparison]);
                 }
@@ -1610,6 +1646,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('advisorTeacherIds', []);
         $studentCounts = $request->input('advisorTotal_students', []);
         $sessionId = $request->sid;
+        $advisor_per_student_rate = $request->advisor_per_student_rate;
 
         Log::info('📥 Submitted Teacher IDs: ', $teacherIds);
         Log::info('📥 Submitted Student Counts: ', $studentCounts);
@@ -1659,7 +1696,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 225; // Example rate per student
+                $rateAmount->default_rate = $advisor_per_student_rate; // Example rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created (Advisor-Student)', $rateAmount->toArray());
@@ -1719,6 +1756,8 @@ class StaffController extends Controller
         $teacherIds = $request->input('verified_grade_teacher_ids', []);
         $amounts = $request->input('verified_grade_amounts', []);
         $sessionId = $request->sid;
+        $final_result_per_student_rate=$request->final_result_per_student_rate;
+
 
         Log::info('📝 Teacher IDs:', $teacherIds);
         Log::info('🧮 Student Amounts:', $amounts);
@@ -1733,7 +1772,7 @@ class StaffController extends Controller
             DB::beginTransaction();
 
             // Step 1: Get or create RateHead
-            $rateHead = RateHead::where('order_no', '13')->first();
+            $rateHead = RateHead::where('order_no', '16')->first();
 
             if (!$rateHead) {
                 $rateHead = RateHead::create([
@@ -1761,7 +1800,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 700; // Set your rate per student
+                $rateAmount->default_rate = $final_result_per_student_rate; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
@@ -1805,11 +1844,12 @@ class StaffController extends Controller
 
 
 
-    public function storeConductedOralExam(Request $request)
+    public function storeConductedCentralOralExam(Request $request)
     {
         $teacherIds = $request->input('conducted_oral_exam_teacher_ids', []);
         $amounts = $request->input('conducted_oral_exam_amounts', []);
         $sessionId = $request->sid;
+        $central_examination_thesis_rate = $request->central_examination_thesis_rate;
 
         Log::info('📝 Teacher IDs:', $teacherIds);
         Log::info('🧮 Student Amounts:', $amounts);
@@ -1829,7 +1869,8 @@ class StaffController extends Controller
             if (!$rateHead) {
                 $rateHead = RateHead::create([
                     'order_no' => '7.e',
-                    'head' => 'Central Viva',
+                    'head' => 'Sessional',
+                    'sub_head' => 'Central Viva',
                     'exam_type' => 1,
                     'dist_type' => 'Individual',
                     'enable_min' => 0,
@@ -1852,7 +1893,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 150; // Set your rate per student
+                $rateAmount->default_rate = $central_examination_thesis_rate; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
@@ -1899,6 +1940,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('involved_survey_teacher_ids'); // array
         $amounts = $request->input('involved_survey_student_amounts');        // array (indexed)
         $sessionId = $request->sid;
+        $servey_rate = $request->servey_rate;
 
         Log::info('📝 Teacher IDs:', $teacherIds);
         Log::info('🧮 Student Amounts:', $amounts);
@@ -1918,7 +1960,8 @@ class StaffController extends Controller
             if (!$rateHead) {
                 $rateHead = RateHead::create([
                     'order_no' => '7.f',
-                    'head' => 'Survey',
+                    'head' => 'Sessional',
+                    'sub_head' => 'Survey',
                     'exam_type' => 1,
                     'dist_type' => 'Individual',
                     'enable_min' => 0,
@@ -1941,7 +1984,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 900; // Set your rate per student
+                $rateAmount->default_rate = $servey_rate; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
@@ -1988,6 +2031,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('conducted_preliminary_viva_teacher_ids'); // array
         $amounts = $request->input('conducted_preliminary_viva_student_amounts');        // array (indexed)
         $sessionId = $request->sid;
+        $viva_thesis_project_rate = $request->viva_thesis_project_rate;
 
         // Step 1: Get or create Session
         $session_info = LocalData::getOrCreateSession($sessionId);
@@ -2034,7 +2078,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 100; // Set your rate per student
+                $rateAmount->default_rate = $viva_thesis_project_rate; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
@@ -2082,6 +2126,7 @@ class StaffController extends Controller
         $internalAmounts = $request->input('examined_internal_thesis_project_student_amounts', []);
         $externalAmounts = $request->input('examined_external_thesis_project_student_amounts', []);
         $sessionId = $request->sid;
+        $examined_thesis_project_rate = $request->examined_thesis_project_rate;
 
 
 
@@ -2128,7 +2173,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 2700; // adjust if needed
+                $rateAmount->default_rate = $examined_thesis_project_rate; // adjust if needed
                 $rateAmount->save();
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
             }
@@ -2176,6 +2221,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('conducted_oral_examination_teacher_ids'); // array
         $amounts = $request->input('conducted_oral_examination_student_amounts');        // array (indexed)
         $sessionId = $request->sid;
+        $oral_exam_thesis_project = $request->oral_exam_thesis_project;
 
 
         Log::info('📝 Teacher IDs:', $teacherIds);
@@ -2223,7 +2269,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 225; // Set your rate per student
+                $rateAmount->default_rate = $oral_exam_thesis_project; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());
@@ -2270,6 +2316,7 @@ class StaffController extends Controller
         $teacherIds = $request->input('supervised_thesis_project_teacher_ids'); // array
         $amounts = $request->input('supervised_thesis_project_student_amounts');        // array (indexed)
         $sessionId = $request->sid;
+        $supervised_thesis_project_rate = $request->supervised_thesis_project_rate;
 
 
         Log::info('📝 Teacher IDs:', $teacherIds);
@@ -2317,7 +2364,7 @@ class StaffController extends Controller
             ]);
 
             if (!$rateAmount->exists) {
-                $rateAmount->default_rate = 5500; // Set your rate per student
+                $rateAmount->default_rate = $supervised_thesis_project_rate; // Set your rate per student
                 $rateAmount->save();
 
                 Log::info('✅ RateAmount Created', $rateAmount->toArray());

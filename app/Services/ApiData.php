@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 class ApiData{
     //get all previous session which is not active now
     //1/1,2/1,3/1,4/1,5/1 5 regular sessoin
-    public static function getPreviousRegularSessions(Request $request)
+    public static function getPreviousRegularSessions()
     {
-        //$authKey = 'OE3KFIE649MRECGQ';
-        $authKey = $request->authKey;
+        $authKey = 'OE3KFIE649MRECGQ';
+        //$authKey = $request->authKey;
         $url = 'https://ugr.duetbd.org/get-architecture-previous-regular-session-data';
 
         $curl = curl_init();
@@ -33,10 +33,10 @@ class ApiData{
 
         return null;
     }
-    public static function getPreviousReviewSession(Request $request)
+    public static function getPreviousReviewSession()
     {
-        //$authKey = 'OE3KFIE649MRECGQ';
-        $authKey = $request->authKey;
+        $authKey = 'OE3KFIE649MRECGQ';
+        //$authKey = $request->authKey;
         $url = 'https://ugr.duetbd.org/get-architecture-previous-review-session-data';
 
         $curl = curl_init();

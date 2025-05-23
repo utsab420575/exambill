@@ -25,10 +25,25 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary ">
                 <header class="card-header">
-                    <h2 class="card-title">Advisory (@225/- per student per semester):</h2>
+                    <h2 class="card-title">Advisory (@***/- per student per semester):</h2>
                 </header>
 
                 <div class="card-body card-list-of-advisor-student">
+
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="advisor_per_student_rate">Per Student Per Semester Rate</label>
+                                <input type="number"  name="advisor_per_student_rate" step="any" class="form-control" placeholder="Enter per student per semester rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
+
                     {{--method call for find teacher name--}}
                     @php
                         function getTeacherName($teacherId, $teachers) {

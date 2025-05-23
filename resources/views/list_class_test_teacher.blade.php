@@ -25,10 +25,17 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">Internal Assessment/Class Test @45/- per class test per student
-                        (@3600/- per paper setter)</h2>
+                    <h2 class="card-title">Internal Assessment/Class Test @**/- per class test per student</h2>
                 </header>
                 <div class="card-body">
+                    <div class="row mb-2">
+                            <div class="col-md-4 mb-4">
+                                <div class="form-group">
+                                    <label for="class_test_rate">Per Class Test Rate</label>
+                                    <input type="number"  name="class_test_rate" step="any" class="form-control" placeholder="Enter class test rate" required>
+                                </div>
+                            </div>
+                    </div>
                     <div class="row">
                         @if(isset($all_course_with_teacher['courses']))
                             @foreach($all_course_with_teacher['courses'] as $courseData)

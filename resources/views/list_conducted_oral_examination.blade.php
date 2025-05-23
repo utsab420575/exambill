@@ -26,10 +26,24 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers conducted oral examination/Jury of thesis/projects (@225/- thesis/projects)</h2>
+                    <h2 class="card-title">List of Teachers conducted oral examination/Jury of thesis/projects (@***/- thesis/projects)</h2>
                 </header>
 
                 <div class="card-body card-list-of-conducted-oral-examination">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="oral_exam_thesis_project">Per Student Per Thesis/Project Rate</label>
+                                <input type="number"  name="oral_exam_thesis_project" step="any" class="form-control" placeholder="Enter per student per thesis/proejct rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
+
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>

@@ -21,11 +21,27 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Scrutinizers (@ 24/- per script,min 1000/- per scrutinizers)
+                    <h2 class="card-title">List of Scrutinizers (@ **/- per script,min ****/- per scrutinizers)
                     </h2>
                 </header>
 
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="scrutinize_script_rate">Per Script Rate</label>
+                                <input type="number"  name="scrutinize_script_rate" step="any" class="form-control" placeholder="Enter per script rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="scrutinize_min_rate">Minimum Scrutinizer Rate</label>
+                                <input type="number"  name="scrutinize_min_rate" step="any" class="form-control" placeholder="Enter minimum scrutinizer rate" required>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             @if(isset($all_course_with_teacher['courses']))

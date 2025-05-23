@@ -5,14 +5,14 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">Honorarium for Chairman (@4500/-)</h2>
+                    <h2 class="card-title">Honorarium for Chairman (@****/-)</h2>
                 </header>
                 <div class="card-body">
                     <table id="table-list-of-honorarium-chairman" class="table table-responsive-md table-striped  mb-0">
                         <thead>
                         <tr>
                             <th style="width: 70%;">Teacher Name</th>
-                            <th style="width: 30%;">Honorarium Amount (৳)</th>
+                            <th style="width: 30%;">Honorarium Amount</th>
                         </tr>
                         </thead>
                         <tbody>

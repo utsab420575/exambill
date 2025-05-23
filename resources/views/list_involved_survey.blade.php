@@ -26,10 +26,22 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of teachers involved survey (@ 900/- per student)</h2>
+                    <h2 class="card-title">List of teachers involved survey (@ ***/- per student)</h2>
                 </header>
 
                 <div class="card-body card-list-of-involved-survey">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="servey_rate">Per Student Servey Rate</label>
+                                <input type="number"  name="servey_rate" step="any" class="form-control" placeholder="Enter per student per servey rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>

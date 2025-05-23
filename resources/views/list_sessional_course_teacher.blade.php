@@ -5,16 +5,28 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">Sessional (@ 115/- per contact hour per week; min 1500/- per examiner)
+                    <h2 class="card-title">Sessional (@ ***/- per contact hour per week; min ****/- per examiner)
                     </h2>
                 </header>
 
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-12 col-md-8"></div>
-                        <div class="col-12 col-md-4">
+                        <div class="col-md-4 mb-4">
                             <div class="form-group">
-                                <label for="total_week">Total Number of Weeks:</label>
+                                <label for="sessional_per_hour_rate">Per Contact Hour Rate</label>
+                                <input type="number"  name="sessional_per_hour_rate" step="any" class="form-control" placeholder="Enter per contact hour rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="class_test_rate">Minimum Examineer Rate</label>
+                                <input type="number"  name="sessional_examiner_min_rate" step="any" class="form-control" placeholder="Enter minimum examiner rate" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="total_week">Total Weeks in semester</label>
                                 <input type="number"
                                        id="total_week"
                                        name="total_week"
@@ -46,7 +58,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th style="width: 60%;">Name</th>
-                                                    <th style="width: 40%;">Contact Hour</th>
+                                                    <th style="width: 40%;">Contact Hour/Week</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,7 +102,7 @@
                             <div class="text-end mt-3">
                                 <button id="submit-list-of-sessional-course-teacher" type="submit" class="btn btn-primary">
                                     Submit
-                                    Sessional
+                                    Sessional Examiner
                                 </button>
                             </div>
                         </div>

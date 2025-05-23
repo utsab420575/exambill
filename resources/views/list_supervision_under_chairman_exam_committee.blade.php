@@ -35,10 +35,23 @@
                         <div class="col-md-12">
                             <section class="card card-featured card-featured-secondary ">
                                 <header class="card-header">
-                                    <h2 class="card-title">Stencil Cutting of Question paper (@ 115/- per stencil):</h2>
+                                    <h2 class="card-title">Stencil Cutting of Question paper (@ ***/- per stencil):</h2>
                                 </header>
 
                                 <div class="card-body card-list-of-supervision_under_chairman_exam_committee">
+                                    <div class="row mb-2">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-group">
+                                                <label for="per_stencil_rate">Per Stencil Rate</label>
+                                                <input type="number"  name="per_stencil_rate" step="any" class="form-control" placeholder="Enter stencil rate" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row pb-3">
                                         {{-- Select Teacher --}}
                                         <label class="col-md-2 control-label text-lg-end pt-2">Select Teacher(s)</label>
@@ -87,10 +100,24 @@
                         <div class="col-md-12">
                             <section class="card card-featured card-featured-secondary ">
                                 <header class="card-header">
-                                    <h2 class="card-title">Printing of question papers (@35/- per stencil)</h2>
+                                    <h2 class="card-title">Printing of question papers (@**/- per stencil)</h2>
                                 </header>
 
                                 <div class="card-body card-list-of-supervision_under_chairman_exam_committee">
+                                    <div class="row mb-2">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-group">
+                                                <label for="print_per_stencil_rate">Per Stencil Rate</label>
+                                                <input type="number"  name="print_per_stencil_rate" step="any" class="form-control" placeholder="Enter stencil rate" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group row pb-3">
                                         {{-- Select Teacher --}}
                                         <label class="col-md-2 control-label text-lg-end pt-2">Select Teacher(s)</label>
@@ -139,10 +166,23 @@
                         <div class="col-md-12">
                             <section class="card card-featured card-featured-secondary ">
                                 <header class="card-header">
-                                    <h2 class="card-title">Comparison,Correction,sketching and distribution of question papers (@ 1350/- per question) :</h2>
+                                    <h2 class="card-title">Comparison,Correction,sketching and distribution of question papers (@ ****/- per question) :</h2>
                                 </header>
 
                                 <div class="card-body card-list-of-supervision_under_chairman_exam_committee">
+                                    <div class="row mb-2">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-group">
+                                                <label for="per_question_rate">Per Question Rate</label>
+                                                <input type="number"  name="per_question_rate" step="any" class="form-control" placeholder="Enter per question rate" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row pb-3">
                                         {{-- Select Teacher --}}
                                         <label class="col-md-2 control-label text-lg-end pt-2">Select Teacher(s)</label>

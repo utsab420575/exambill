@@ -26,6 +26,20 @@
                 </header>
 
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="sessional_grade_sheet_rate">Per Student Per Subject Rate</label>
+                                <input type="number"  name="sessional_grade_sheet_rate" step="any" class="form-control" placeholder="Enter per student per subject rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-12">
                             @if(isset($all_sessional_course_with_teacher['courses']))

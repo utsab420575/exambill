@@ -26,10 +26,26 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Examination Committee/Moderation Committee Members @ min 1500</h2>
+                    <h2 class="card-title">List of Examination Committee/Moderation Committee Members @ min***</h2>
                 </header>
 
                 <div class="card-body card-list-of-moderation-committee">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="total_week">Min rate per member</label>
+                                <input type="number"  name="moderation_committee_min_rate" step="any" class="form-control" placeholder="Min rate per member" required="">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="total_week">Max rate per member:</label>
+                                <input type="number"  name="moderation_committee_max_rate" step="any" class="form-control" placeholder="Enter Total Weeks" required="">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>
@@ -79,7 +95,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <input type="number" name="moderation_committee_amounts[]" class="form-control amount-input" placeholder="Provide Amount" disabled required min="1500" max="5000">
+                <input type="number" name="moderation_committee_amounts[]" class="form-control amount-input" placeholder="Provide Amount" disabled required>
             </div>
         `;
 

@@ -25,10 +25,30 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Examiners (@ 200/- per script,min 1000/- per examiner) &Paper Setters
-                        (@3600/- per paper setter)</h2>
+                    <h2 class="card-title">List of Examiners (@ ***/- per script,min ****/- per examiner) &Paper Setters
+                        (@****/- per paper setter)</h2>
                 </header>
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="moderation_committee_min_rate">Rate Per script</label>
+                                <input type="number"  name="examiner_rate_per_script" step="any" class="form-control" placeholder="Rate per script" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="total_week">Minimum Rate Per Examiner</label>
+                                <input type="number"  name="examiner_min_rate" step="any" class="form-control" placeholder="Min Rate per examiner" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="total_week">Paper Setter Rate:</label>
+                                <input type="number"  name="paper_setter_rate" step="any" class="form-control" placeholder="Paper Setter Rate" required>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         @if(isset($all_course_with_teacher['courses']))
                             @foreach($all_course_with_teacher['courses'] as $courseData)

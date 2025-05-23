@@ -26,10 +26,23 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers supervised the thesis/projects (@ 5500/- thesis/projects)</h2>
+                    <h2 class="card-title">List of Teachers supervised the thesis/projects (@ ****/- thesis/projects)</h2>
                 </header>
 
                 <div class="card-body card-list-of-supervised-thesis-project">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="supervised_thesis_project_rate">Per Student Per Thesis/Project Rate</label>
+                                <input type="number"  name="supervised_thesis_project_rate" step="any" class="form-control" placeholder="Enter per student per thesis/project rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>

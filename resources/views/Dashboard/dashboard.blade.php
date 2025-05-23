@@ -1,20 +1,6 @@
 @extends('layouts.app')
 @section('styles')
-    <style>
-        #table-list-of-examination-committee td {
-            transition: background-color 0.6s ease-in-out, opacity 0.6s ease-in-out;
-        }
 
-        .fade-green {
-            background-color: #68a17a !important;
-            opacity: 1;
-        }
-
-        .fade-out {
-            opacity: 0.3;
-        }
-
-    </style>
     @stack('styles')
 
 @endsection
@@ -37,7 +23,13 @@
         </header>
         <!-- start: page -->
 
-       
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-info">
+                        This is Dashboard
+                    </div>
+                </div>
+            </div>
 
 
         <!-- end: page -->

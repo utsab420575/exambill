@@ -21,11 +21,24 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers for the Preparation of Grade Sheet(Theoritical (@45/- per student per subject))
+                    <h2 class="card-title">List of Teachers for the Preparation of Grade Sheet(Theoritical (@**/- per student per subject))
                     </h2>
                 </header>
 
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="theory_grade_sheet_rate">Per Student Per Subject Rate</label>
+                                <input type="number"  name="theory_grade_sheet_rate" step="any" class="form-control" placeholder="Enter per student per subject rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             @if(isset($all_course_with_teacher['courses']))

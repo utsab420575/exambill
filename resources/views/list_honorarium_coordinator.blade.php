@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">Honorarium for course co-ordinator (UG) (@3600/-)</h2>
+                    <h2 class="card-title">Honorarium for course co-ordinator (UG) (@****/-)</h2>
                 </header>
                 <div class="card-body">
                     <table id="table-list-of-honorarium-coordinator" class="table table-responsive-md table-striped  mb-0">

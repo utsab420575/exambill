@@ -19,17 +19,32 @@
     </style>
 @endpush
 
-<form id="form-list-of-conducted_oral_exam" action="{{ route('conducted.oral.exam.store') }}" method="POST">
+<form id="form-list-of-conducted_oral_exam" action="{{ route('conducted.central.oral.exam.store') }}" method="POST">
     @csrf
     <input type="hidden" name="sid" value="{{$sid}}">
     <div class="row mb-5">
         <div class="col-md-12">
             <section class="card card-featured card-featured-primary">
                 <header class="card-header">
-                    <h2 class="card-title">List of Teachers conducted central oral examination of thesis/projects (@ 150/- per student):</h2>
+                    <h2 class="card-title">List of Teachers conducted central oral examination of thesis/projects (@ ***/- per student):</h2>
                 </header>
 
                 <div class="card-body card-list-of-conducted_oral_exam">
+                    <div class="row mb-2">
+                        <div class="col-md-4 mb-4">
+                            <div class="form-group">
+                                <label for="central_examination_thesis_rate">Per Student Per Thesis/Proejct Rate</label>
+                                <input type="number"  name="central_examination_thesis_rate" step="any" class="form-control" placeholder="Enter per student per thesis/proejct rate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                        </div>
+                    </div>
+
+
+
                     <div class="row mb-2 fw-bold">
                         <div class="col-md-1 text-center">Select</div>
                         <div class="col-md-6">Teacher</div>
