@@ -154,7 +154,7 @@ class PdfController extends Controller
 
 
 
-        //Order 7.e
+        //Order 8.a
         $rateHead_order_8a = RateHead::where('order_no', '8.a')->first();
         // Assuming $session_info is already available
         $rateAmount_order_8a = RateAmount::where('session_id', $session_info->id)
@@ -164,7 +164,7 @@ class PdfController extends Controller
             ->with('rateHead')
             ->first(); // or get() if you expect multiple
 
-        //Order 7.f
+        //Order 8.b
         $rateHead_order_8b = RateHead::where('order_no', '8.b')->first();
         // Assuming $session_info is already available
         $rateAmount_order_8b = RateAmount::where('session_id', $session_info->id)
@@ -174,7 +174,7 @@ class PdfController extends Controller
             ->with('rateHead')
             ->first(); // or get() if you expect multiple
 
-        //Order 7.f
+        //Order 8.c
         $rateHead_order_8c = RateHead::where('order_no', '8.c')->first();
         // Assuming $session_info is already available
         $rateAmount_order_8c = RateAmount::where('session_id', $session_info->id)
@@ -184,6 +184,134 @@ class PdfController extends Controller
             ->with('rateHead')
             ->first(); // or get() if you expect multiple
 
+        //Order 8.d
+        $rateHead_order_8d = RateHead::where('order_no', '8.d')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_8d = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '8.d');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+
+        //Order 9
+        $rateHead_order_9 = RateHead::where('order_no', '9')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_9 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '9');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+
+
+
+        //Order 10.a
+        $rateHead_order_10_a = RateHead::where('order_no', '10.a')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_10_a = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '10.a');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+        //Order 10.b
+        $rateHead_order_10_b = RateHead::where('order_no', '10.b')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_10_b = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '10.b');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+        //Order 11
+        $rateHead_order_11 = RateHead::where('order_no', '11')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_11 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '11');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+
+        //Order 12.a
+        $rateHead_order_12_a = RateHead::where('order_no', '12.a')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_12_a = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '12.a');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+        //Order 12.b
+        $rateHead_order_12_b = RateHead::where('order_no', '12.b')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_12_b = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '12.b');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+        //Order 13
+        $rateHead_order_13 = RateHead::where('order_no', '13')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_13 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '13');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+
+        //Order 14
+        $rateHead_order_14 = RateHead::where('order_no', '14')->first();
+        //dd($rateHead_order_14);
+        // Assuming $session_info is already available
+        $rateAmount_order_14 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '14');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+        //dd($rateAmount_order_14);
+
+
+        //Order 15
+        $rateHead_order_15 = RateHead::where('order_no', '15')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_15 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '15');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
+
+
+        //Order 16
+        $rateHead_order_16 = RateHead::where('order_no', '16')->first();
+        // Assuming $session_info is already available
+        $rateAmount_order_16 = RateAmount::where('session_id', $session_info->id)
+            ->whereHas('rateHead', function ($query) {
+                $query->where('order_no', '16');
+            })
+            ->with('rateHead')
+            ->first(); // or get() if you expect multiple
         //dd($rateAmount_order_1);
 
         $pdf = Pdf::loadView('ReportSessions.regular_session_report_download', [
@@ -221,9 +349,40 @@ class PdfController extends Controller
             'rateAmount_order_8b'=>$rateAmount_order_8b,
             'rateHead_order_8c' => $rateHead_order_8c,
             'rateAmount_order_8c'=>$rateAmount_order_8c,
+            'rateHead_order_8d' => $rateHead_order_8d,
+            'rateAmount_order_8d'=>$rateAmount_order_8d,
 
-        ]);
+            'rateHead_order_9' => $rateHead_order_9,
+            'rateAmount_order_9'=>$rateAmount_order_9,
 
+
+            'rateHead_order_10_a' => $rateHead_order_10_a,
+            'rateAmount_order_10_a'=>$rateAmount_order_10_a,
+            'rateHead_order_10_b' => $rateHead_order_10_b,
+            'rateAmount_order_10_b'=>$rateAmount_order_10_b,
+
+            'rateHead_order_11' => $rateHead_order_11,
+            'rateAmount_order_11'=>$rateAmount_order_11,
+
+
+            'rateHead_order_12_a' => $rateHead_order_12_a,
+            'rateAmount_order_12_a'=>$rateAmount_order_12_a,
+            'rateHead_order_12_b' => $rateHead_order_12_b,
+            'rateAmount_order_12_b'=>$rateAmount_order_12_b,
+
+            'rateHead_order_13' => $rateHead_order_13,
+            'rateAmount_order_13'=>$rateAmount_order_13,
+
+            'rateHead_order_14' => $rateHead_order_14,
+            'rateAmount_order_14'=>$rateAmount_order_14,
+
+            'rateHead_order_15' => $rateHead_order_15,
+            'rateAmount_order_15'=>$rateAmount_order_15,
+
+            'rateHead_order_16' => $rateHead_order_16,
+            'rateAmount_order_16'=>$rateAmount_order_16,
+
+        ])->setPaper('legal', 'portrait'); // or 'landscape';
 
 
         return $pdf->stream('demo_exam_bill.pdf');

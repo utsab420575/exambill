@@ -633,7 +633,7 @@ class StaffController extends Controller
             $rateHead = RateHead::where('order_no', 9)->first(); // Use appropriate order_no for Scrutinizer
             if (!$rateHead) {
                 $rateHead = new RateHead();
-                $rateHead->head = 'Scrutinizer';
+                $rateHead->head = 'Scrutinizing(Answre Script)';
                 $rateHead->exam_type = 1;
                 $rateHead->order_no = 9;
                 $rateHead->dist_type = 'Share';
